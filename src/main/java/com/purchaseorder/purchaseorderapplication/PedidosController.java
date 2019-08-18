@@ -18,7 +18,6 @@ public class PedidosController {
 	
 	@GetMapping("/all")
 	public List<Users> getAll(){
-		usersService.salvar(4, "Bruno", "UX", 200L);
 		return usersService.findAll();	
 		
 	}

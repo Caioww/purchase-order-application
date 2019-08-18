@@ -15,8 +15,8 @@ public class UsersService {
     @Autowired
     private UsersRepository usersRepository;
  
-    public void salvar(Integer id, String nome,String team, Long salary) {
-        usersRepository.save(new Users(id, nome, team, salary));
+    public void salvar(String id, String nome,String email, String password) {
+        usersRepository.save(new Users(id, nome, email, password));
     }
  
     public List<Users> findAll() {
@@ -33,6 +33,10 @@ public class UsersService {
  
     public void delete(Integer id) {
         usersRepository.deleteById(id);
+    }
+    
+    public void deleteAll() {
+    	usersRepository.deleteAll();
     }
  
 }

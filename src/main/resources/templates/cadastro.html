@@ -30,6 +30,8 @@
     .input-field input[type=date]:focus + label,
     .input-field input[type=text]:focus + label,
     .input-field input[type=email]:focus + label,
+    .input-field input[type=name]:focus + label,
+    .input-field input[type=confirmPassword]:focus + label,
     .input-field input[type=password]:focus + label {
       color: #e91e63;
     }
@@ -37,6 +39,8 @@
     .input-field input[type=date]:focus,
     .input-field input[type=text]:focus,
     .input-field input[type=email]:focus,
+    .input-field input[type=name]:focus,
+    .input-field input[type=confirmPassword]:focus,
     .input-field input[type=password]:focus {
       border-bottom: 2px solid #e91e63;
       box-shadow: none;
@@ -54,13 +58,13 @@
       
       <div class="section"></div>
 
-      <h5 class="indigo-text font-color">Por favor, entre com sua conta:</h5>
+      <h5 class="indigo-text font-color">Cadastro de Conta</h5>
       <div class="section"></div>
 
       <div class="container">
         <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
 
-          <form class="col s12" method="post">
+          <form class="col s12" method="post" action="cadastrarPessoas" id="salvaPessoas">
             <div class='row'>
               <div class='col s12'>
               </div>
@@ -68,38 +72,94 @@
 
             <div class='row'>
               <div class='input-field col s12'>
-                <input class='validate' type='email' name='email' id='email' />
-                <label for='email'>Enter your email</label>
+              <span>Nome:</span>
+                <input id="name" class='validate' type='text' name='name'  />
+                <label for='name'></label>
               </div>
             </div>
-
+            
             <div class='row'>
               <div class='input-field col s12'>
-                <input class='validate' type='password' name='password' id='password' />
-                <label for='password'>Enter your password</label>
+              <span>Email:</span>
+                <input class='validate' type='email' name='email' id='email' />
+                <label for='email'></label>
               </div>
-              <label style='float: right;'>
-								<a class='pink-text' href='#!'><b>Forgot Password?</b></a>
-							</label>
+            </div>
+            
+            <div class='row'>
+              <div class='input-field col s12'>
+              <span>Senha:</span>
+                <input class='validate' type='password' name='password' id='password' />
+                <label for='password'></label>
+              </div>
+            </div>
+            
+            <div class='row'>
+              <div class='input-field col s12'>
+              <span>Digite sua senha novamente:</span>
+                <input class='validate' type='password' name='confirmPassword' id='confirmPassword' />
+                <label for='password'></label>
+              </div>
             </div>
 
             <br />
             <center>
               <div class='row'>
-                <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect black'>Login</button>
+                <button type='button' name='btn_login' onclick="validaSenha();" class='col s12 btn btn-large waves-effect black'>Confirmar cadastro</button>
               </div>
             </center>
           </form>
         </div>
       </div>
-      <a th:href="${#mvc.url('IC#cadastro').build()}">Create account</a>
     </center>
     
     <div class="section"></div>
     <div class="section"></div>
   </main>
-
+  <span id="span_id" style="display: none;" th:text="${usuarios}"></span>
+  <input type="hidden" id="usuarios" value='${usuarios}'/>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 </body>
+
+<script>
+
+
+function validaSenha(){
+	var email = document.querySelector("#email").value;
+	var name = document.querySelector("#name").value;
+	var usuarios = JSON.parse(document.getElementById("span_id").innerHTML);
+	var senha = document.querySelector("#password").value;
+	var confirmaSenha = document.querySelector("#confirmPassword").value;
+	
+	for(i=0;i<Object.keys(usuarios).length;i++){
+		if(name == usuarios[i].name){
+			Materialize.toast(('Nome já existe!', 3000, 'Nome já existe!'))
+			return false;
+		}
+		if(email == usuarios[i].email){
+			Materialize.toast(('Email já existe!', 3000, 'Email já está cadastrado!'))
+			return false;
+		}else if(email == null){
+			Materialize.toast(('Email não pode ser vazio!', 3000, 'Email não pode ser vazio!'))
+			return false;
+		}
+		
+	}
+
+	if(senha != confirmaSenha){
+		Materialize.toast(('As duas senhas não conferem!', 3000, 'As duas senhas não conferem!'))
+	}else if(senha ==null){
+		Materialize.toast(('As duas senhas não conferem!', 3000, 'A senha não pode ser vazia!'))
+	}else{
+		document.querySelector("#salvaPessoas").submit();
+	}
+	
+	
+	
+	
+}
+
+
+</script>
 </html>

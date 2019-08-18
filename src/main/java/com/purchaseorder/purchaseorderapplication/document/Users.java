@@ -1,26 +1,36 @@
 package com.purchaseorder.purchaseorderapplication.document;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Users {
 	
-	private Integer id;
+	@Id 
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private String id;
 	private String name;
-	private String teamName;
-	private Long salary;
+	private String email;
+	private String password;
 	
-	public Users(Integer id, String name, String teamName, Long salary) {
+	public Users(String id, String name, String email, String password) {
 		this.id = id;
 		this.name = name;
-		this.teamName = teamName;
-		this.salary = salary;
+		this.email = email;
+		this.password = password;
 	}
 	
-	public Integer getId() {
+	public Users() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public String getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -29,17 +39,17 @@ public class Users {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getTeamName() {
-		return teamName;
+	public String getEmail() {
+		return email;
 	}
-	public void setTeamName(String teamName) {
-		this.teamName = teamName;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-	public Long getSalary() {
-		return salary;
+	public String getPassword() {
+		return password;
 	}
-	public void setSalary(Long salary) {
-		this.salary = salary;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 
