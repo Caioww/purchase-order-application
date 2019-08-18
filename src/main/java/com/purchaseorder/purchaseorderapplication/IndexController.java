@@ -31,8 +31,6 @@ public class IndexController {
 	public ModelAndView cadastro() throws Throwable {
 		ModelAndView mv = new ModelAndView("cadastro");
 		List<Users> usuarios = usersService.findAll();
-		Map<String, Object> myData = new LinkedHashMap<>();
-	    myData.put("usuarios", usuarios);
 	    ObjectMapper objectMapper = new ObjectMapper();
 		mv.addObject("usuarios", objectMapper.writeValueAsString(usuarios));
 		return mv;
